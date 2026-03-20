@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package common;
+
+// option go_package = "allinfinance.gitlab.com/wksd-go-project/wksd-api/api/common";
+option go_package = "agdemoapi/api/common";
+
+// grpc响应通用定义
+message CommonReply {
+  // true代表处理成功， false代表处理失败
+  bool success = 1;
+  // 处理失败时可以用来携带错误信息
+  string error = 2;
+}
+
+message CommonReq {
+  string name = 1;
+}
+message CommonRep {
+    string msg = 1;
+}

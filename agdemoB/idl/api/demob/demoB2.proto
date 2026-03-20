@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package api.demob;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "agdemoB/api/demob";
+
+service demobsvc2 {
+    rpc hello (BReq2) returns (BRep2){
+        option (google.api.http) = {
+            get: "v2/hello"  
+            response_body: "*"
+        };
+    };
+
+}
+
+
+message BReq2 {
+  string name = 1;
+}
+message BRep2 {
+    string msg = 1;
+}

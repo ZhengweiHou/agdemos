@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package demob;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "agdemoB/api/demob";
+
+service demob {
+	rpc calldemob (BRequest) returns (BReply){
+	    option (google.api.http) = {
+            post: "calldemoB"  
+            body: "*"
+            response_body: "*"
+        };
+    };
+
+}
+
+message BRequest {
+  string name = 1;
+}
+message BReply {
+    string msg = 1;
+}

@@ -1,0 +1,16 @@
+goos: linux
+goarch: amd64
+pkg: agdemoA/internal/benchtest
+cpu: 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz
+BenchmarkKitexPoc-8   	   12700	    467621 ns/op	    3945 B/op	      72 allocs/op
+BenchmarkKitexPoc-8   	   14048	    408650 ns/op	    3935 B/op	      72 allocs/op
+BenchmarkKitexPoc-8   	   13623	    440906 ns/op	    3943 B/op	      72 allocs/op
+BenchmarkKitexPoc-8   	   14358	    476485 ns/op	    3935 B/op	      72 allocs/op
+BenchmarkKitexPoc-8   	   14109	    419633 ns/op	    3933 B/op	      72 allocs/op
+BenchmarkKitexPoc-8   	   13592	    424117 ns/op	    3938 B/op	      72 allocs/op
+BenchmarkKitexPoc-8   	   14060	    407940 ns/op	    3934 B/op	      72 allocs/op
+BenchmarkKitexPoc-8   	   13996	    444201 ns/op	    3940 B/op	      72 allocs/op
+BenchmarkKitexPoc-8   	   12364	    413730 ns/op	    3944 B/op	      72 allocs/op
+BenchmarkKitexPoc-8   	   14096	    487688 ns/op	    3943 B/op	      72 allocs/op
+PASS
+ok  	agdemoA/internal/benchtest	104.268s

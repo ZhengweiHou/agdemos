@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package api.hzw;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.hzw.cn/api/hzw;hzw";
+option java_multiple_files = true;
+option java_package = "api.hzw";
+option java_outer_classname = "HzwProto";
+
+service HzwHello2 {
+	rpc HelloHzw2 (HzwRequest2) returns (HzwReply2){
+	    // option (google.api.http) = {
+        //     post: "/v1/hzw/hello"
+        //     body: "*"
+        // };
+	    option (google.api.http) = {
+            get: "/v2/hzw/hello/:Name"  // TODO 这里的name若是"name"则hertz bindPath没法取到, 需要改为"Name", proto生成的实体字段首字母为大写
+            response_body: "msg"
+            additional_bindings: [
+                { 
+                    get: "/v2/hello/get2"
+                    response_body: "msg"
+                },
+                {
+                    get: "/v2/hzw/hello2/:Name"  
+                    response_body: "msg"
+                },
+                {
+                    post: "/v2/hzw/hello3"
+                    body: "*"
+                }
+            ]
+        };
+    };
+
+    rpc HelloHzwStream2(stream HzwRequest2) returns (stream HzwReply2) {
+	    option (google.api.http) = {
+            post: "/v2/xxxx"  
+            body: "*"
+        };
+
+    }; // 双向流
+}
+
+// service HzwGetService {
+// 	rpc GetHzw (HzwRequest) returns (HzwReply){
+// 	    option (google.api.http) = {
+//             get: "/v1/hzw/get/:name"
+//             response_body: "msg"
+//         };
+//     };
+// }
+
+message HzwRequest2 {
+  string name = 1;
+}
+message HzwReply2 {
+    string msg = 1;
+}

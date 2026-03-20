@@ -1,0 +1,64 @@
+database_table:
+    table_name: student
+    columns:
+        ID:
+            db_column: ID
+            go_type: int64
+            primary_key: true
+            not_null: true
+            length: "12"
+            auto_increment: true
+        STUNO:
+            db_column: STUNO
+            go_type: int64
+            not_null: true
+            length: "12"
+        NAME:
+            db_column: NAME
+            go_type: string
+            length: "100"
+            description: ///@omitempty
+        AGE:
+            db_column: AGE
+            go_type: int
+            comment: 年龄
+            not_null: true
+        VERSION:
+            db_column: VERSION
+            go_type: int64
+            length: "11"
+        FCT:
+            db_column: FCT
+            go_type: time.Time
+            comment: 创建时间
+            description: ///@create
+        LCT:
+            db_column: LCT
+            go_type: time.Time
+            comment: 最后更新时间
+            description: ///@update
+    primary_keys:
+        - column: id
+    indexes:
+        general:
+            - index_name: INDEX_NAME_AGE
+              columns:
+                - name
+                - age
+        unique:
+            - index_name: STUNO_UNIUQE_1
+              columns:
+                - stuno
+self_query_rules:
+    FindByAge:
+        select_fields: ID,STUNO,NAME,AGE
+        where:
+            operator: AND
+            conditions:
+                - expr: AGE = @Age
+                - expr: STUNO > @Stuno
+    FindByWithPage:
+        select_fields: '*'
+        where:
+            expr: AGE = @Age
+        page: true

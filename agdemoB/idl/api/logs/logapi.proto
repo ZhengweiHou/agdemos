@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package api.logs;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "xxx/api/logs;logs";
+option java_multiple_files = true;
+option java_package = "api.logs";
+option java_outer_classname = "LogServer";
+
+service LogServer {
+	rpc BatchLog (BatchLogRequest) returns (BatchLogResponse){
+	    option (google.api.http) = {
+            post: "/v1/logs/batch" 
+            body: "*"
+            response_body: "*"
+        };
+    };
+
+    rpc StreamLog (stream BatchLogRequest) returns (BatchLogResponse){};
+}
+
+message BatchMetadata {
+  string host = 1;
+  string host_name = 2; // FIXME k8s中如何定位到主机、pod、容器
+  int32 process_id = 3;
+  string process_name = 4;
+  // string app_id = 5;
+  map<string, string> exts = 6;
+}
+
+message LogEntry {
+  int64 timestamp = 1;
+  string level = 2;
+  string message = 3;
+
+  string trace_id = 4;
+  string span_id = 5;
+
+  string type = 6;  // RPC、trade、... 自定义的
+  
+  // 单条日志私有字段（可选，不重复传输共享信息）
+  string thread_id = 7;
+  string thread_name = 8;
+
+  string org_no = 9;
+
+  map<string, string> attrs = 10;
+  
+  // 可选：覆盖批次级的主机/进程信息（极少用）
+  // string host_override = 10;
+  // int32 process_id_override = 11;
+}
+
+message BatchLogRequest {
+  BatchMetadata batch_meta = 1;
+  repeated LogEntry logs = 2; // logs进行压缩
+}
+
+// 压缩方式
+enum CompressionType {
+  None = 0; 
+  Gzip = 1;
+  Snappy = 2;
+  Lz4 = 3;
+  Zstd = 4;
+}
+
+// 批量响应
+message BatchLogResponse {
+    int32 code = 1;
+    string message = 2;
+    string request_id = 3;
+
+    int32 accepted_count = 4;
+    int32 rejected_count = 5;
+    
+    message RejectedDetail {
+      int32 index = 1;
+      string reason = 2;
+    }
+    repeated RejectedDetail rejected_details = 6;
+}

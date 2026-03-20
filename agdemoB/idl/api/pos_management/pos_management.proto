@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package pos_management;
+
+import "common/common.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+// option go_package = "allinfinance.gitlab.com/wksd-go-project/wksd-api/api/pos_management";
+option go_package = "agdemoapi/api/pos_management";
+
+// POS管理服务
+service PosManagement {
+  // Pos签到请求
+  rpc SignIn (common.CommonReq) returns (common.CommonRep){
+      option (google.api.http) = {
+          get: "posmsingin"  
+        //   body: "*"
+          response_body: "*"
+      };
+  };
+}
