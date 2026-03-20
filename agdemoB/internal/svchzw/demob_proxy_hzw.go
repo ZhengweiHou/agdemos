@@ -23,20 +23,33 @@ import (
 // }
 
 // 服务信息,接口级别
-var DemobServiceInfo = ag_service.ServiceInfo{
-	PackageName: "api.demob",
-	ServiceName: "demob",
-	HandlerType: demob.Demob(nil),
-}
+//
+//	var DemobServiceInfo = ag_service.ServiceInfo{
+//		PackageName: "api.demob",
+//		ServiceName: "demob",
+//		HandlerType: demob.Demob(nil),
+//	}
+var DemobServiceInfo = ag_service.NewServiceInfo(
+	"api.demob",
+	"demob",
+	demob.Demob(nil),
+)
 
 // 方法级别的调用信息,servicename+methodname+CallInfo // TODO 需要到包级别的区分吗?
-var Demob_Calldemob_CallInfo = &ag_service.CallInfo{
-	ServiceInfo: DemobServiceInfo,
-	CallName:    "Calldemob",
-	Extra: map[string]interface{}{
-		"method_name": "Calldemob",
-	},
-}
+//
+//	var Demob_Calldemob_CallInfo = &ag_service.CallInfo{
+//		ServiceInfo: DemobServiceInfo,
+//		CallName:    "Calldemob",
+//		Extra: map[string]interface{}{
+//			"method_name": "Calldemob",
+//		},
+//	}
+var Demob_Calldemob_CallInfo = ag_service.NewCallInfo(
+	DemobServiceInfo,
+	"Calldemob",
+	false,
+	false,
+)
 
 var DemobCallInfos = map[string]*ag_service.CallInfo{
 	"Calldemob": Demob_Calldemob_CallInfo,
@@ -74,7 +87,7 @@ func NewDemobProxy_hzw(
 	}
 
 	for _, cif := range p.CallInfos {
-		if cif.ClientStreaming || cif.ServerStreaming {
+		if cif.IsClientStreaming() || cif.IsServerStreaming() {
 			slog.Warn("agServiceProxy buildskip streaming method", "call_name", cif.CallName)
 			continue
 		}
@@ -90,7 +103,7 @@ func NewDemobProxy_hzw(
 		}
 		// 注册endpoint
 		// p.registerEndpoint(cif.CallName, endpoint)
-		p.RegisterEndpoint(cif.CallName, endpoint)
+		p.RegisterEndpoint(cif.CallName(), endpoint)
 	}
 
 	return p, nil
@@ -122,7 +135,7 @@ func (p *DemobProxy_hzw) Calldemob(ctx context.Context, req *demob.BRequest) (*d
 
 // 获取原始方法处理器
 func (p *DemobProxy_hzw) getOriginalHandler(cif *ag_service.CallInfo) smw.Endpoint {
-	switch cif.CallName {
+	switch cif.CallName() {
 	case "Calldemob":
 		return func(ctx context.Context, req interface{}) (interface{}, error) {
 			return p.impl.Calldemob(ctx, req.(*demob.BRequest))

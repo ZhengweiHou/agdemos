@@ -6,9 +6,10 @@ import (
 	"fmt"
 )
 
-func HzwCallinfoOpt(ci *ag_service.CallInfo) {
+func HzwCallinfoOpt(ci *ag_service.CallInfo) error {
 	fmt.Printf("====== callinfoopt: %v\n", ci)
 	ci.Extra["HzwCallinfoOpt"] = true
+	return nil
 }
 
 func HzwMWFunc(next ag_service.Endpoint) ag_service.Endpoint {
@@ -16,7 +17,7 @@ func HzwMWFunc(next ag_service.Endpoint) ag_service.Endpoint {
 		cif := ag_service.GetCallInfoFromContext(ctx)
 
 		fmt.Printf("====== HzwMWFunc HzwCallinfoOpt: %v\n", cif.Extra["HzwCallinfoOpt"])
-		htype := cif.HandlerType
+		htype := cif.ServiceInfo().HandlerType()
 		fmt.Printf("====== HzwMWFunc HandlerType: %T\n", htype)
 
 		return next(ctx, req)

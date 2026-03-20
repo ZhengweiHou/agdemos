@@ -24,16 +24,18 @@ import (
 type DemobProxy struct {
 	impl        *service.DemobImpl
 	endpoints   map[string]smw.Endpoint
-	serviceInfo smw.ServiceInfo
-	methodInfos map[string]smw.CallInfo
+	serviceInfo *smw.ServiceInfo
+	methodInfos map[string]*smw.CallInfo
 }
 
 // NewDemobProxy 创建DemobProxy
 func NewDemobProxy(service *service.DemobImpl, mws []smw.MiddlewareProvider) demob.Demob {
-	sinfo := smw.ServiceInfo{
-		PackageName: "api.demob",
-		ServiceName: "demob",
-	}
+	// 	sinfo := smw.ServiceInfo{
+	// 		PackageName: "api.demob",
+	// 		ServiceName: "demob",
+	// 	}
+
+	sinfo := smw.NewServiceInfo("api.demob", "demob", nil)
 
 	proxy := &DemobProxy{
 		impl:        service,
