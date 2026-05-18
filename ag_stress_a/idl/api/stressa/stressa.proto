@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package stressa;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "ag_stress_a/api/stressa";
+
+service aService{
+    rpc echoA (EchoARequest) returns (EchoAResponse){
+        option (google.api.http) = {
+            post: "echo/a"  
+            body: "*"
+            response_body: "*"
+        };
+    };
+}
+
+message EchoARequest {
+    string name = 1;
+}
+
+message EchoAResponse {
+    string msg = 1;
+}
+

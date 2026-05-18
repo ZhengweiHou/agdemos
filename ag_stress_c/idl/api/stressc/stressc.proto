@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package stressc;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "ag_stress_c/api/stressc";
+
+service cService{
+    rpc echoC (EchoCRequest) returns (EchoCResponse){
+        option (google.api.http) = {
+            post: "echo/c"  
+            body: "*"
+            response_body: "*"
+        };
+    };
+}
+
+message EchoCRequest {
+    string name = 1;
+}
+
+message EchoCResponse {
+    string msg = 1;
+}
+

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package stressb;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "ag_stress_b/api/stressb";
+
+service bService{
+    rpc echoB (EchoBRequest) returns (EchoBResponse){
+        option (google.api.http) = {
+            post: "echo/b"  
+            body: "*"
+            response_body: "*"
+        };
+    };
+}
+
+message EchoBRequest {
+    string name = 1;
+}
+
+message EchoBResponse {
+    string msg = 1;
+}
+
