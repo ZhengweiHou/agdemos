@@ -63,7 +63,8 @@ func (c *DemobImpl) Calldemob(ctx context.Context, req *demob.BRequest) (*demob.
 		dt = 0
 	}
 
-	stu, err := c.studao.FindByStuno(ctx, 1)
+	// stu, err := c.studao.FindByStuno(ctx, 1)
+	stu, err := c.studao.FindByPrimaryKey(ctx, 1)
 	if err != nil {
 		slog.Error(fmt.Sprintf("FindByStuno err: %v", err))
 	}
