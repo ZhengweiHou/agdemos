@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package api.hello;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+// option go_package = "agdemoC/api/hello";
+option go_package = "agdemoA/api/hello";
+
+service hello {
+	rpc pinghello (HelloRequest) returns (HelloReply){
+	    option (google.api.http) = {
+            post: "pinghello"  
+            body: "*"
+            response_body: "*"
+        };
+    };
+
+}
+
+message HelloRequest {
+  string name = 1;
+}
+message HelloReply {
+    string msg = 1;
+}

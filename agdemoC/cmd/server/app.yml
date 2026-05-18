@@ -1,0 +1,78 @@
+server:
+  name: agdemoc
+
+kitex:
+  server:
+    Port: 9996
+    AdaptivePort: true
+    ServiceName: ${server.name}kitex
+    EnableIPRange: 0:255
+    Grpc:
+      enable: true
+      MaxConnectionIdle: 10
+
+hertz:
+  server:
+    port: 9997
+    adaptive-port: true
+    service-name: ${server.name}hertz
+
+nacos:
+  config:
+    # serveraddr: 127.0.0.1:8813
+    serveraddr: sirius.cn:8813
+    # serveraddr: 127.0.0.1:8848
+    namespace: test
+    username: nacos
+    password: '{cipher}bmFjb3M='
+    dataids:
+      - dataid: test
+        group: test
+        # type: yaml
+        # autorefresh: true
+      - dataid: test2
+        group: test
+
+  naming:
+    serveraddr: ${nacos.config.serveraddr}
+    namespace: ${nacos.config.namespace}
+    username: ${nacos.config.username}
+    password: ${nacos.config.password}
+
+data:
+  db:
+    user:
+      driver: mysql
+      # dsn: "root:root@tcp(localhost:3306)/houzw?parseTime=True"
+      # dsn: "root:root@tcp(sirius.cn:3306)/houzw?parseTime=True"
+      dsn: "${dbu}:${dbp}@tcp(sirius.cn:3306)/houzw?parseTime=True"
+
+dbu: root
+# dbp: root
+dbp: '{cipher}cm9vdA=='
+
+
+
+agredis:
+  type: rw
+  config:
+    addrs:
+      - "sirius.cn:6379"
+      # - "127.0.0.1:6379"
+    MaxRetries: 1
+    ReadTimeout: 100
+  Replicas:
+    - addrs:
+        - "sirius.cn:6379"
+      MaxRetries: 1
+    
+aglog:
+  topHandler: [zap1]
+  zap:
+    logs:
+      zap1:
+        log_level: debug
+        encoding: console           # json or console
+        compress: true
+        console: true
+        Stdout: true

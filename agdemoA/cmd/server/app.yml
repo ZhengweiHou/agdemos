@@ -1,0 +1,59 @@
+server:
+  name: agdemoa
+
+kitex:
+  server:
+    Port: 8886
+    AdaptivePort: true
+    ServiceName: ${server.name}_kitex
+    EnableIPRange: 0:255
+    Grpc:
+      enable: true
+      MaxConnectionIdle: 30
+  client:
+    rpcTimeout: 3
+    Resolver:
+      Enable: true
+
+
+hertz:
+  server:
+    port: 8887
+    adaptive-port: true
+    service-name: ${server.name}_hertz
+    pprof: true
+
+nacos:
+  config:
+    serveraddr: 127.0.0.1:8813
+    namespace: test
+    username: nacos
+    password: '{cipher}bmFjb3M2'
+    dataids:
+      - dataid: test
+        group: test
+        type: yaml
+        autorefresh: true
+  naming:
+    serveraddr: ${nacos.config.serveraddr}
+    namespace: ${nacos.config.namespace}
+    username: ${nacos.config.username}
+    password: ${nacos.config.password}
+  
+
+aglog:
+  topHandler: [zap1]
+  zap:
+    logs:
+      zap1:
+        # log_level: debug
+        # encoding: console           # json or console
+        # log_file_name: "logs/hhhzzzwww.log"
+        # compress: true
+        # console: true
+
+        log_level: debug
+        encoding: console           # json or console
+        compress: true
+        console: true
+        stdout: true

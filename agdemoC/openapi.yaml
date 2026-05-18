@@ -1,0 +1,40 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Hello API
+    version: 0.0.1
+paths:
+    pinghello:
+        post:
+            tags:
+                - Hello
+            operationId: Hello_Pinghello
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.hello.HelloRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.hello.HelloReply'
+components:
+    schemas:
+        api.hello.HelloReply:
+            type: object
+            properties:
+                msg:
+                    type: string
+        api.hello.HelloRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+tags:
+    - name: Hello

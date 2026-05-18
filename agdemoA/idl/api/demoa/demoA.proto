@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package demoa;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "agdemoA/api/demoa";
+
+service DemoA {
+	rpc calldemoa (ARequest) returns (AReply){
+	    option (google.api.http) = {
+            post: "calldemoA"  
+            body: "*"
+            response_body: "*"
+        };
+    };
+
+}
+message ARequest {
+  string name = 1;
+}
+message AReply {
+    string msg = 1;
+}

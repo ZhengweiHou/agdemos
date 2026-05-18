@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package api.demob;
+
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+option go_package = "agdemoB/api/demob";
+
+service demob {
+    // rpc hello (BRequest) returns (BReply){
+    //     option (google.api.http) = {
+    //         get: "hello"  
+    //         response_body: "*"
+    //     };
+    // };
+
+	rpc calldemob (BRequest) returns (BReply){
+	    option (google.api.http) = {
+            post: "calldemoB"  
+            body: "*"
+            response_body: "*"
+        };
+    };
+
+    // rpc ClientSideStreaming(stream BRequest) returns (BReply) {} // 客户端侧 streaming
+    // rpc ServerSideStreaming(BRequest) returns (stream BReply) {} // 服务端侧 streaming
+    // rpc BidiSideStreaming(stream BRequest) returns (stream BReply) {} // 双向流
+}
+
+// service demobsvc {
+// 	rpc calldemobsvc (BRequest) returns (BReply){
+// 	    option (google.api.http) = {
+//             post: "calldemobsvc"  
+//             body: "*"
+//             response_body: "*"
+//         };
+//     };
+
+// }
+
+message BRequest {
+  string name = 1;
+}
+message BReply {
+    string msg = 1;
+}

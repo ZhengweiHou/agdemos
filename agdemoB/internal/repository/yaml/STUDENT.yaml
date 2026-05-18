@@ -1,0 +1,78 @@
+table_name: STUDENT
+columns:
+- name: ID
+  type: int64
+  length: "12"
+  not_null: true
+  auto_increment: true
+  support_update: false
+- name: STUNO
+  type: int64
+  length: "12"
+  not_null: true
+  auto_increment: false
+  support_update: false
+- name: NAME
+  type: string
+  length: "100"
+  not_null: false
+  auto_increment: false
+  support_update: false
+  description: ///@omitempty
+- name: AGE
+  type: int
+  not_null: true
+  auto_increment: false
+  support_update: false
+- name: VERSION
+  type: int64
+  length: "11"
+  not_null: false
+  auto_increment: false
+  support_update: false
+- name: FCT
+  type: time
+  not_null: false
+  auto_increment: false
+  support_update: false
+  description: ///@create
+- name: LCT
+  type: time
+  not_null: false
+  auto_increment: false
+  support_update: false
+  description: ///@update
+primary_key:
+- ID
+constraints:
+- name: STUNO_UNIUQE_1
+  columns:
+  - STUNO
+indexes:
+- name: INDEX_NAME_AGE
+  columns:
+  - NAME
+  - AGE
+- name: INDEX_AGE
+  columns:
+  - AGE
+self_query_rules:
+  FindByAge:
+    select_fields: ID,STUNO,NAME,AGE
+    page: false
+    dynamic_sql: false
+    sql_template: ""
+    where:
+      operator: AND
+      conditions:
+      - expr: AGE = @Age
+      - expr: STUNO > @Stuno
+  FindByWithPage:
+    select_fields: '*'
+    page: true
+    dynamic_sql: false
+    sql_template: ""
+    where:
+      operator: AND
+      conditions:
+      - expr: AGE = @Age

@@ -1,0 +1,40 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: DemoA API
+    version: 0.0.1
+paths:
+    calldemoA:
+        post:
+            tags:
+                - DemoA
+            operationId: DemoA_Calldemoa
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/demoa.ARequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/demoa.AReply'
+components:
+    schemas:
+        demoa.AReply:
+            type: object
+            properties:
+                msg:
+                    type: string
+        demoa.ARequest:
+            type: object
+            properties:
+                name:
+                    type: string
+tags:
+    - name: DemoA

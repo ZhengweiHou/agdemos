@@ -1,0 +1,63 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ""
+    version: 0.0.1
+paths:
+    calldemoB:
+        post:
+            tags:
+                - Demob
+            operationId: Demob_Calldemob
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.demob.BRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.demob.BReply'
+    v2/hello:
+        get:
+            tags:
+                - Demobsvc2
+            operationId: Demobsvc2_Hello
+            parameters:
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.demob.BRep2'
+components:
+    schemas:
+        api.demob.BRep2:
+            type: object
+            properties:
+                msg:
+                    type: string
+        api.demob.BReply:
+            type: object
+            properties:
+                msg:
+                    type: string
+        api.demob.BRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+tags:
+    - name: Demob
+    - name: Demobsvc2

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package api.hzw;
+
+// import "google/api/annotations.proto";
+// import "google/protobuf/descriptor.proto"; // 包含 deprecated 选项的定义
+
+// option go_package = "ag-layout-demo/api/hzw;hzw";
+option go_package = "github.hzw.cn/api/hzw;hzw";
+option java_multiple_files = true;
+option java_package = "api.hzw";
+option java_outer_classname = "HelloStreamProto";
+option deprecated = true;
+
+message Request {
+  string msg = 1;
+}
+message Response {
+  string msg = 1;
+}
+
+service HelloStream {
+  rpc NoStreaming(Request) returns (Response) {}
+  rpc ClientSideStreaming(stream Request) returns (Response) {} // 客户端侧 streaming
+  rpc ServerSideStreaming(Request) returns (stream Response) {} // 服务端侧 streaming
+  rpc BidiSideStreaming(stream Request) returns (stream Response) {} // 双向流
+}
