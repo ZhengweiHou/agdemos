@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package common;
 
-// option go_package = "allinfinance.gitlab.com/wksd-go-project/wksd-api/api/common";
 option go_package = "agdemoapi/api/common";
 
 // grpc响应通用定义
